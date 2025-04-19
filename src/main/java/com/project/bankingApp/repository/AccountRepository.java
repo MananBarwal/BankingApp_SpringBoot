@@ -19,6 +19,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	 boolean aadharUsed(@Param("aadharNum") long aadharNum);
 	 
 	 @Query("Select exists (Select 1 from Account a where a.phoneNumber= :phoneNumber)")
-	 boolean phoneUsed(@Param("aadharNum") long phoneNumber);
+	 boolean phoneUsed(@Param("phoneNumber") long phoneNumber);
 
 }

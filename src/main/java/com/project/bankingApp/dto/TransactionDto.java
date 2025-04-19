@@ -11,7 +11,6 @@ import lombok.Data;
 public class TransactionDto {
 	    private long Transaction_id;
 	    private long accNumber;
-	    private Account account;
 	    private EnumforTransaction transactionType; // "DEPOSIT", "WITHDRAW", "TRANSFER"
 	    private double amount;
 	    private String PaymentFrom;

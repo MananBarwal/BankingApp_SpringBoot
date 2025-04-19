@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.bankingApp.Security.UserDetails.CustomUserDetails;
 import com.project.bankingApp.dto.AccountDto;
+import com.project.bankingApp.dto.BalanceDto;
 import com.project.bankingApp.dto.updateDto;
 import com.project.bankingApp.entity.Account;
 import com.project.bankingApp.entity.EnumforRoles;
@@ -102,6 +103,18 @@ public class AccountServiceImpl implements AccountService {
 		Account a=AccountRepo.findById(id).orElseThrow(() -> new RuntimeException ("Account not found"));
 		a.setRole(Role);
 		return accountMapper.accountToDto(AccountRepo.save(a));
+	}
+
+	@Override
+	public BalanceDto checkBalance() {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a == null || !a.isAuthenticated()) { throw new RuntimeException ("Unauthenticated User");}
+		CustomUserDetails UserDetails = (CustomUserDetails) a.getPrincipal();
+		long accNumber = Long.parseLong(UserDetails.getUsername());
+		Account account= AccountRepo.findById(accNumber).orElseThrow(() -> new RuntimeException ("Account not found"));
+		BalanceDto b=accountMapper.accountToBalanceDto(account);
+		
+		return b;
 	}
 
 	

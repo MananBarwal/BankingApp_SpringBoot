@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.bankingApp.dto.DWDto;
 import com.project.bankingApp.dto.TransactionDto;
+import com.project.bankingApp.dto.WithdrawDto;
 import com.project.bankingApp.dto.transferDto;
 import com.project.bankingApp.service.TransactionService;
 
@@ -34,7 +35,7 @@ public class TransactionController {
 	}
 	
 	@PostMapping("/withdraw")
-	public ResponseEntity<TransactionDto> withdraw(@RequestBody DWDto d){
+	public ResponseEntity<TransactionDto> withdraw(@RequestBody WithdrawDto d){
 		TransactionDto td=t.withdraw(d);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(td);
 	}
@@ -61,5 +62,7 @@ public class TransactionController {
 		List<TransactionDto> allTransactions= t.TransactionHistory();
 		return ResponseEntity.ok(allTransactions);
 	} 
+	
+	
 	
 }

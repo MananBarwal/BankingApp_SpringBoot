@@ -5,6 +5,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.project.bankingApp.dto.AccountDto;
+import com.project.bankingApp.dto.BalanceDto;
 import com.project.bankingApp.dto.updateDto;
 import com.project.bankingApp.entity.Account;
 
@@ -13,6 +14,8 @@ public interface AccountMapper {
 	
     AccountDto accountToDto(Account account);
     Account dtoToAccount(AccountDto accountDto);
+    
+    BalanceDto accountToBalanceDto(Account a);
     
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAccountFromDto(updateDto dto, @MappingTarget Account entity);

@@ -17,6 +17,7 @@ import com.project.bankingApp.Security.UserDetails.CustomUserDetails;
 import com.project.bankingApp.Security.jwt.JwtUtil;
 import com.project.bankingApp.dto.DWDto;
 import com.project.bankingApp.dto.TransactionDto;
+import com.project.bankingApp.dto.WithdrawDto;
 import com.project.bankingApp.entity.Account;
 import com.project.bankingApp.entity.EnumforTransaction;
 import com.project.bankingApp.entity.Transaction;
@@ -67,23 +68,26 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	@Transactional
-	public TransactionDto withdraw(DWDto dw) {
-		long accNumber=dw.getId();
+	public TransactionDto withdraw(WithdrawDto dw) {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a == null || !a.isAuthenticated()) { throw new RuntimeException ("Unauthenticated User");}
+		CustomUserDetails UserDetails = (CustomUserDetails) a.getPrincipal();
+		long accNumber = Long.parseLong( UserDetails.getUsername());
 		double amount=dw.getAmount();
 		if (amount <= 0) {
 			throw new RuntimeException("Amount should be greater than zero");
 		}
-		Account a= AccountRepo.findById(accNumber).orElseThrow(() -> new RuntimeException ("Not found"));
-		double currentBalance=a.getBalance();
+		Account a1= AccountRepo.findById(accNumber).orElseThrow(() -> new RuntimeException ("Not found"));
+		double currentBalance=a1.getBalance();
 		if (amount>currentBalance){
 			throw new RuntimeException ("Insufficient funds");
 		}
 		else{
 			double newBalance = currentBalance - amount;
-			a.setBalance(newBalance);
-			AccountRepo.save(a);
+			a1.setBalance(newBalance);
+			AccountRepo.save(a1);
 			Transaction withdrawTransaction = new Transaction();
-			withdrawTransaction.setAccount(a);
+			withdrawTransaction.setAccount(a1);
 			withdrawTransaction.setTransactionType(EnumforTransaction.WITHDRAW);
 			withdrawTransaction.setPaymentTo(dw.getName());
 			withdrawTransaction.setPaymentFrom("N/A");

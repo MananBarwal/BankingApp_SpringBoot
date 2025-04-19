@@ -11,8 +11,7 @@ import com.project.bankingApp.entity.Account;
 
 public class CustomUserDetails implements UserDetails {
 	
-	private Account account;
-											// Constructor injection
+	private Account account; // Constructor injection
 	public CustomUserDetails(Account a) {
 		this.account=a;
 	}

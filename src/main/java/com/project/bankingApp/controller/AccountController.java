@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.bankingApp.dto.AccountDto;
+import com.project.bankingApp.dto.BalanceDto;
 import com.project.bankingApp.dto.EditRoledto;
 import com.project.bankingApp.dto.updateDto;
 import com.project.bankingApp.entity.EnumforRoles;
@@ -75,7 +76,12 @@ public class AccountController {
 		System.out.println("Update Account API is called!");
 		return ResponseEntity.status(HttpStatus.CREATED).body(p);
 	}
-
+	
+	@GetMapping("/checkBalance")
+	public ResponseEntity<BalanceDto> checkBalance(){
+		BalanceDto b=a.checkBalance();
+	return ResponseEntity.ok().body(b);
+	}
 }
 
 

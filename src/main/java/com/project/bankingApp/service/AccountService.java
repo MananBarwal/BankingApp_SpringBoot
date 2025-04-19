@@ -4,6 +4,7 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 
 import com.project.bankingApp.dto.AccountDto;
+import com.project.bankingApp.dto.BalanceDto;
 import com.project.bankingApp.dto.TransactionDto;
 import com.project.bankingApp.dto.updateDto;
 import com.project.bankingApp.entity.EnumforRoles;
@@ -17,6 +18,7 @@ public interface AccountService  {
 	public AccountDto deactivateAccount(long id);
 	List<AccountDto> getAllAccounts();
 	AccountDto editRole (long id, EnumforRoles role);
+	BalanceDto checkBalance();
 	
 	
 	

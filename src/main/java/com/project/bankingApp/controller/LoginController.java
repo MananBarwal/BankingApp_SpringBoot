@@ -51,8 +51,8 @@ public class LoginController {
 		String accessToken = jwtUtil.generateAccessToken(userDetails);
 		String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-		int accessTokenMaxAge = (1 * 60);
-		int refreshTokenMaxAge = (24 * 60*60);
+		int accessTokenMaxAge = (5 * 60);
+		int refreshTokenMaxAge = (10 * 60*60);
 
 		// Set HTTP-only Secure Cookies
 		Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
